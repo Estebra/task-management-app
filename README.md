@@ -1,4 +1,4 @@
-# task-management-app
+# Task management app Step-by-step
 
 This repository contains a Task Management Application created as a learning project to gain hands-on experience with Python (Django), RESTful API development, AWS cloud services, and containerization with Docker. The goal is to build a functional application while documenting the process and demonstrating understanding of these technologies.
 
@@ -86,7 +86,7 @@ title = models.CharField(max_length=200)
 description = models.TextField(blank=True, mull=True)
 ```
 
-* For the status attribute "status" will take a list of coubles, for which we set 3 options to choose from and a default optino:
+* The attribute "status" will have a list of coubles, for which we set 3 options to choose from and a default option:
 
 ```python
 status = models.CharField(
@@ -115,3 +115,5 @@ updated_at = models.DatetimeField(auto_now=True)
 def __str__(self): 
     return self.title
 ```
+
+* [Complete code of the Step 2: Task 1](tasks/models.py)

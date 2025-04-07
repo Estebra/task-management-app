@@ -7,19 +7,20 @@ class Task(models.Model): # by inheriting from models.Model, tells Django that t
     # Structure of the atributes of the Task model
     # attributeName = importedMudule.FieldType(parameters)
     title = models.CharField(max_length=200)
-    description = models.TextField(blank=True, mull=True)
+    description = models.TextField(blank=True, null=True)
     status = models.CharField(
         max_length=20,
-        choices=[  # choices takes a list of tuples
+        # choices takes a list of tuples
+        choices=[
             ('to_do', 'To Do'), # first element is value to be stored in the database,second is human-readable name
             ('in_progress', 'In Progress'),
-            ('done', 'Done'),
-        ]
+            ('done', 'Done')
+        ],
         default='to_do'
     )
     due_date = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True) # auto_now_add=True sets the field to now when the object is first created
-    updated_at = models.DatetimeField(auto_now=True) # auto_now=True updates the field to now every time the object is saved
+    updated_at = models.DateTimeField(auto_now=True) # auto_now=True updates the field to now every time the object is saved
 
     # python method to return a string representation of the object
     def __str__(self): 

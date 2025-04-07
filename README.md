@@ -117,3 +117,5 @@ def __str__(self):
 ```
 
 * [Complete code of the Step 2: Task 1](tasks/models.py)
+
+### Task 2: Database Design and Setup 

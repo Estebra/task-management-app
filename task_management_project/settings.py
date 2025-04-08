@@ -76,10 +76,10 @@ WSGI_APPLICATION = 'task_management_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'task_management_db',
+        'NAME': 'taskmanagementdb',
         'USER': 'admin_db_user',
-        'PASSWORD': 'sZCDEND*&969@',
-        'HOST': 'localhost', # replace later with for the AWS RDS endpoint
+        'PASSWORD': 'sZCDEND*&969',
+        'HOST': 'db-task-management.ccngn754fg2m.us-east-1.rds.amazonaws.com', # replace later with for the AWS RDS endpoint
         'PORT': '5432', # default PostgreSQL port
     }
 }

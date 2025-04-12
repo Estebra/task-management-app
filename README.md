@@ -8,6 +8,7 @@ This repository contains a Task Management Application created as a learning pro
 * Pip
 * Virtualenv
 * Django
+* AWS
 
 ## Step 1 - Set Up the Local Development Environment
 
@@ -60,7 +61,7 @@ This repository contains a Task Management Application created as a learning pro
 
 Defining the fields the Task object will have.
 
-1. Open the tasks/model.py in a code editor
+1. Open the [tasks/model.py](tasks/model.py) in a code editor
     This is where the structure of the "Task" data is define.
 
 2. Make sure you import the base classes and tools:
@@ -115,9 +116,9 @@ Defining the fields the Task object will have.
 
     > [Complete code of the Step 2: Task 1](tasks/models.py)
 
-8. Django needs to be told that the tasks app exists by adding it to the INSTALLED_APPS list in the projec's settings.py file.
+8. Django needs to be told that the tasks app exists by adding it to the INSTALLED_APPS list in the [projec's settings.py](task_management_project/settings.py) file.
 
-    * Open the task_management_project/settings.py file.
+    * Open the [task_management_project/settings.py](task_management_project/settings.py) file.
     * Locate the INSTALLED_APPS list.
     * Add the name of the app, 'tasks' (as a string).
     * Save the file and try to run the command once more.
@@ -166,7 +167,7 @@ Defining the fields the Task object will have.
 
 3. Create and Apply Database Migrations.
 
-    * Migration are how Django handles changes to your models in the database schema, the Task model define in the tasks/medels.py. We need to create a migration for it and apply that migration for the tasks app.
+    * Migration are how Django handles changes to your models in the database schema, the Task model define in the [tasks/models.py](tasks/models.py). We need to create a migration for it and apply that migration for the tasks app.
     * Run the following command to create the migrations for the tasks app:
 
         ```bash
@@ -201,14 +202,14 @@ Take note of the Enpoint, this is the hostname we will use to connect to the dat
 
 We will update the Django project's settings to connect to the newly created PostgreSQL database on AWS.
 
-1. Open your tastk_management_project/setting.py file.
+1. Open your [tastk_management_project/setting.py](tastk_management_project/setting.py) file.
 2. Modify the DATABASE setting to reflect your AWS PostgreSQL instance details.
 
 This will tell Django to communicate with the PostgreSQL database on AWS.
 
 ## Step 5 - Running Migration on the AWS DB
 
-Now we can run the Django migrations to crate the necessary tables in our AWS PostgreSQL database based on the tasks/medels.py file.
+Now we can run the Django migrations to crate the necessary tables in our AWS PostgreSQL database based on the [tasks/medels.py](tasks/medels.py) file.
 
 1. Run the migration command:
 
@@ -228,7 +229,7 @@ Now we define the API Endpoint to perform CRUD operations on our tasks. We will 
     pip install djangorestframework
     ```
 
-2. Add the ‘rest_framework’ to the INSTALLED_APPS in task_managment_project/settings.py:
+2. Add the ‘rest_framework’ to the INSTALLED_APPS in [task_managment_project/settings.py](task_managment_project/settings.py):
 
     ```python
     # Application definition
@@ -245,7 +246,7 @@ Now we define the API Endpoint to perform CRUD operations on our tasks. We will 
         ]
     ```
 
-3. Create a serialiver.py file within your tasks app directory. This will define how the Task model instances should be converted to JSON (and vice versa). Add the following code:
+3. Create a [serialiver.py](tasks/serializers.py) file within your tasks app directory. This will define how the Task model instances should be converted to JSON (and vice versa). Add the following code:
 
     ```bash
     touch tasks/serializers.py
@@ -262,7 +263,7 @@ Now we define the API Endpoint to perform CRUD operations on our tasks. We will 
             fields = '__all__' # include all fields from the Task model
     ```
 
-4. The tasks/views.py will contain the logic for the API endpoint. We are using the Django Framework’s ModelViewSet for easy CRUD operations:
+4. The [tasks/views.py](tasks/views.py) will contain the logic for the API endpoint. We are using the Django Framework’s ModelViewSet for easy CRUD operations:
 
     ```python
     from django.shortcuts import render
@@ -295,28 +296,32 @@ We will now test our newly created API endpoints to ensure they are working corr
 
     * GET <http://127.0.0.1:8000/api/tasks/> : To retrieve a list of all tasks (should be empty initially):
 
-    ```bash
-    curl
-    ```
+        ```bash
+        curl http://127.0.0.1:8000/api/tasks/
+        ```
 
     * POST <http://127.0.0.1:8000/api/tasks/> : To create a new task. Send a JSON payload in the request body like:
 
-    ```bash
-    curl
-    ```
+        ```bash
+        curl -X POST -H "Content-Type: application/json" -d "{\"title\": \"Testing the API Endpoints\", \"description\": \"This test was was made from the Windows command prompt\", \"status\": \"to_do\", \"due_date\": \"2025-05-10\"}" http://127.0.0.1:8000/api/tasks/
+        ```
 
     * GET <http://127.0.0.1:8000/api/tasks/{id}/> : Replace {id} with the ID of the task you just created to retrieve that specific task:
 
-    ```bash
-    curl
-    ```
+        ```bash
+        curl http://127.0.0.1:8000/api/tasks/{3}/
+        ```
 
     * PUT <http://127.0.0.1:8000/api/tasks/{id}/> : Replace {id} with the task ID to update the task. Send a JSON payload with the updated information.
 
-    ```bash
-    curl
-    ```
+        ```bash
+        curl -X PUT -H "Content-Type: application/json" -d "{\"title\": \"Test to update\", \"description\": \"This is test to update a task\", \"status\": \"in_progress\", \"due_date\": \"2025-05-10\"}" http://127.0.0.1:8000/api/tasks/{3}/
+        ```
 
     * DELETE <http://127.0.0.1:8000/api/tasks/{id}/> : Replace {id} with the task ID to delete the task.
+
+        ```bash
+        curl -X DELETE http://127.0.0.1:8000/api/tasks/{4}/
+        ```
 
 Now we are able to create, read, update, and delete tasks through your RESTful API.

@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,11 +81,11 @@ WSGI_APPLICATION = 'task_management_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'taskmanagementdb',
-        'USER': 'admin_db_user',
-        'PASSWORD': 'sZCDEND*&969',
-        'HOST': 'db-task-management.ccngn754fg2m.us-east-1.rds.amazonaws.com', # replace later with for the AWS RDS endpoint
-        'PORT': '5432', # default PostgreSQL port
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'), # replace later with for the AWS RDS endpoint
+        'PORT': os.environ.get('DB_PORT'), # default PostgreSQL port
     }
 }
 
